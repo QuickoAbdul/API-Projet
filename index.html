@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Formulaire de recherche d'API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+     <link rel="stylesheet"  href="style.css">
+  </head>
+
+<body>
+  <nav class="navbar navbar-expand-lg" style="background-color: #3e4551">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="#">API Elden rings</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-white" aria-current="page" href="index.html">Home</a>
+          </li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Ammos</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Ammos</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Armors</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Bosses</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Creatures</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Locations</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="#">Weapons</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="letitre">
+    <h1>Rechercher un item</h1></div>
+    <!-- Row de columns 2 par 2 -->
+    <div class="row row-cols-1 bg-dark1">
+      <div class="col justify-content-center text-center">
+        <h2>Item</h2>
+        <p> 
+          <input type="text" id="item" name="lname" placeholder="Cipher"><br><br>
+        </p>
+      </div>
+    </div>
+
+      <!-- Row Recherche-->
+      <div class="row bg-dark1">
+        <div class="col justify-content-center text-center">
+          <button id="myBtn" class="btn btn-primary">Rechercher</button>
+          </div>
+        </div>  
+      <div class="row bg-dark2">
+        <div class="col-md-4 justify-content-center text-center">
+          <h2> Résultats :</h2>
+          <div id="resultAPI"></div>
+
+        </div>
+      </div>
+      </div>
+
+    <!--Footer-->
+    <footer class="text-center text-lg-start text-white" style="background-color: #3e4551" >
+      <div class="container p-4 pb-0">
+        <section class="">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+              <h5 class="text-uppercase">API GÉORISQUES</h5>
+              <p>
+                Site qui permet de rechercher des informations par item, Départements, Région ou Code de la ville 
+                grâce à l'API <a class="text-white" href="https://api.gouv.fr/">API.GOUV</a>
+              </p>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+              <h5 class="text-uppercase">Links</h5>
+
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="https://github.com/QuickoAbdul/" class="text-white">Github</a><i class="fab fa-github"></i>
+                </li>
+              </ul>
+            </div>
+        </section>
+      </div>
+      <!-- Copyright -->
+      <div
+          class="text-center p-3"
+          style="background-color: rgba(0, 0, 0, 0.2)"
+          >
+        © 2022 Copyright:
+        <a class="text-white" href="#!"
+          >Shahzad Abdul rahman</a
+          >
+      </div>
+  </footer>
+  <!-- Footer -->
+</div>
+
+<script>
+  var resultAPI = document.getElementById("resultAPI");
+  let inputs = document.querySelectorAll('input');
+  // Sur clic sur le bouton
+  document.getElementById("myBtn").addEventListener("click", function(e) 
+  {
+    // Message d'attente
+    resultAPI.innerHTML = "Calculs en cours...";
+    // Récupération des élèment et suppression des espaces
+    item = document.getElementById("item").value.replace(/\s+/g, "");
+    // Définition du endPoint
+    if(item != 0)
+    {
+      endPoint = "https://eldenring.fanapis.com/api/items?name=" + encodeURI(item);
+    }
+
+    // Appel AJAX de l’API
+    ajaxAPI(endPoint, "GET", function (reponse) 
+    {
+      resultAPI.innerHTML = reponseExplore(reponse);
+    });
+    inputs.forEach(input => input.value = '');
+
+  });
+
+
+  function ajaxAPI(url, methode, callback) 
+  {
+      let promise = fetch(url, {
+      method: methode,
+      }).then((resp) => resp.json()).then(function(data) {callback(data);
+      }).catch(function(error) {console.error(error + " " + url);
+      });
+  }
+
+  function reponseExplore(objet) 
+  {
+  let contenu;
+  contenu = '<ul>';
+  for (let i = 0 ; i < Object.keys(objet).length ; i++ ) 
+  {
+    if ( Object.values(objet)[i] !== null ) {
+        contenu += '<li>' + Object.keys(objet)[i] + ' : ';
+        if ( typeof Object.values(objet)[i] === 'object' ) 
+        {
+            contenu += reponseExplore(Object.values(objet)[i]);
+        } 
+        else 
+        {
+            contenu += Object.values(objet)[i];
+        }
+        contenu += '</li>';
+        }
+        }
+        contenu += '</ul>';
+        return contenu;
+  }
+
+  //Rendre cette page comme la page home, Dupliquez le script dans toutes les pages, 
+
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
