@@ -1,3 +1,15 @@
+// Tableau pour stocker les touches entrées par l'utilisateur
+const konamiCode = [];
+
+document.addEventListener("keydown", function(event) {
+    // Ajoute la touche entrée par l'utilisateur au tableau
+    konamiCode.push(event.keyCode);
+
+    // Vérifie si la séquence de touches correspond au Konami code
+    if (konamiCode.toString() === "38,38,40,40,37,39,37,39,66,65") {
+        window.location.href = "https://https://fr.bandainamcoent.eu/elden-ring/elden-ring";
+    }
+});
   var resultAPI = document.getElementById("resultAPI");
   let inputs = document.querySelectorAll('input');
   // Sur clic sur le bouton
@@ -114,4 +126,3 @@
         return contenu;
       }
       
-// Il faut réparer cette fonction la en s'inspirant des autres, 
