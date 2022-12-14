@@ -84,27 +84,34 @@
         });
     }
 
-    function reponseExplore(objet) 
-    {
+    function reponseExplore(objet) {
         let contenu;
-        contenu = '<ul>';
-        for (let i = 0 ; i < Object.keys(objet).length ; i++ ) 
-        {
-            if ( Object.values(objet)[i] !== null ) 
-            {
-                contenu += '<li>' + Object.keys(objet)[i] + ' : ';
-                if ( typeof Object.values(objet)[i] === 'object' ) 
-                {
-                    contenu += reponseExplore(Object.values(objet)[i]);
-                } 
-                else 
-                {
-                    contenu += Object.values(objet)[i];
-                }
-                contenu += '</li>';
-            }
+        contenu = '<div class="tbcontent"><table class="table table-dark">';
+      
+        // Récupérer les ce qui se trouve dans le DATA['...']
+        let data = objet.data;
+      
+        // Récupération sous forme de tableau (colonnes qu'on veut avoir)
+        contenu += '<tr>';
+        contenu += '<th>Nom</th>';
+        contenu += '<th>Image</th>';
+        contenu += '<th>Description</th>';
+        contenu += '</tr >' ;
+      
+        // Loop entre les datas et création de table entre chaque item
+        for (let i = 0; i < data.length; i++) {
+          let name = data[i].name;
+          let image = data[i].image;
+          let description = data[i].description;
+          contenu += '<tr>';
+          contenu += '<td >' + name + '</td>';
+          contenu += '<td class="text-center"><img src="' + image + '" class="img-fluid"></td>';
+          contenu += '<td>' + description + '</td>';
+          contenu += '</tr>';
         }
-                contenu += '</ul>';
-                return contenu;
-    }
+
+        contenu += '</table></div>';
+        return contenu;
+      }
+      
 // Il faut réparer cette fonction la en s'inspirant des autres, 
