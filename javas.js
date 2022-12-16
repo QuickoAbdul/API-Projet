@@ -7,7 +7,7 @@ document.addEventListener("keydown", function(event) {
 
     // Vérifie si la séquence de touches correspond au Konami code
     if (konamiCode.toString() === "38,38,40,40,37,39,37,39,66,65") {
-        window.location.href = "https://https://fr.bandainamcoent.eu/elden-ring/elden-ring";
+        window.location.href = "https://fr.bandainamcoent.eu/elden-ring/elden-ring";
     }
 });
   var resultAPI = document.getElementById("resultAPI");
@@ -117,7 +117,7 @@ document.addEventListener("keydown", function(event) {
           let description = data[i].description;
           contenu += '<tr>';
           contenu += '<td >' + name + '</td>';
-          contenu += '<td class="text-center"><img src="' + image + '" class="img-fluid"></td>';
+          contenu += '<td class="text-center"><img src="' + image + '" class="img-fluid1"></td>';
           contenu += '<td>' + description + '</td>';
           contenu += '</tr>';
         }
